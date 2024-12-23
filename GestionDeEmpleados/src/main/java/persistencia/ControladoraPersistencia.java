@@ -29,7 +29,7 @@ public class ControladoraPersistencia {
 
     //Se crea un nuevo metodo que incluya un filtro por cargo
     public List<Empleado> traerEmpleadosCargo(String cargo) {
-        String jpql = "SELECT e FROM Empleado e WHERE e.cargo = :cargo";
+        String jpql = "SELECT e FROM Empleado e WHERE LOWER(e.cargo) = LOWER(:cargo)";
         TypedQuery<Empleado> query = entityManager.createQuery(jpql, Empleado.class);
         query.setParameter("cargo", cargo);  
         return query.getResultList();  

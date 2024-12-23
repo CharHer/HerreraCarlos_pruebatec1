@@ -107,12 +107,12 @@ public class GestionDeEmpleados {
                         empleado.setFecha_ingreso(fecha_ingresoActualizada);
                         
                         controlPersis.actualizarEmpleado(empleado);
-                        System.out.println("Empleado actualizado exitosamente");
+                        System.out.println("\nEmpleado actualizado exitosamente");
 
                         break;
 
                     case 4: //eliminar
-                        System.out.println("Por favor, indique el Id del empleado que desea borrar\n");
+                        System.out.println("Por favor, indique el Id del empleado que desea borrar");
                         int idBorrar = teclado.nextInt();
                         empleado = controlPersis.traerEmpleado(idBorrar);
                         
@@ -121,7 +121,8 @@ public class GestionDeEmpleados {
                         break;
 
                     case 5: //buscar
-                        System.out.println("Para realizar la busqueda indique el cargo: \n");
+                        System.out.println("Para realizar la busqueda indique el cargo: ");
+                        teclado.nextLine();
                         String cargoBuscar = teclado.nextLine();
 
                         List<Empleado> empleadosEncontrados = controlPersis.traerEmpleadosCargo(cargoBuscar);
@@ -130,7 +131,7 @@ public class GestionDeEmpleados {
                         } else {
                             System.out.println("Empleados con el cargo '" + cargoBuscar + "':");
                             for (Empleado emp : empleadosEncontrados) {
-                                System.out.println(empleado);
+                                System.out.println(emp);
                             }
                         }
 
