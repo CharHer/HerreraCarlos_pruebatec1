@@ -4,26 +4,38 @@ package persistencia;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 import logica.Empleado;
 import persistencia.exceptions.NonexistentEntityException;
 
 public class ControladoraPersistencia {
-    
+
     EmpleadoJpaController empleadoJpa = new EmpleadoJpaController();
     
     public void crearEmpleado(Empleado empleado){
         empleadoJpa.create(empleado);
     }
     
-    public Empleado traerPlatillo(int id) {
+    public Empleado traerEmpleado(int id) {
         return empleadoJpa.findEmpleado(id);
     }
     
-    public List<Empleado> traerEmpleados(){
+    public List<Empleado> traerEmpleados() {
         return empleadoJpa.findEmpleadoEntities();
     }
-    
-    public void actualizarEmpleado(Empleado empleado){
+
+    //Se crea un nuevo metodo que incluya un filtro por cargo
+    public List<Empleado> traerEmpleadosCargo(String cargo) {
+        String jpql = "SELECT e FROM Empleado e WHERE e.cargo = :cargo";
+        TypedQuery<Empleado> query = entityManager.createQuery(jpql, Empleado.class);
+        query.setParameter("cargo", cargo);  
+        return query.getResultList();  
+    }
+
+    public void actualizarEmpleado(Empleado empleado) {
         try {
             empleadoJpa.edit(empleado);
         } catch (Exception ex) {
@@ -31,7 +43,7 @@ public class ControladoraPersistencia {
         }
     }
     
-    public void eliminarEmpleado(int id){
+    public void eliminarEmpleado(int id) {
         try {
             empleadoJpa.destroy(id);
         } catch (NonexistentEntityException ex) {
@@ -39,4 +51,24 @@ public class ControladoraPersistencia {
         }
     }
     
+    
+    //Para crear instancias de EntityManager, que se utilizan para interactuar con la base de datos (realizar operaciones CRUD sobre las entidades).
+    private EntityManagerFactory emf;
+    private EntityManager entityManager;
+
+    public ControladoraPersistencia() {
+
+        emf = Persistence.createEntityManagerFactory("empleadosPU");
+        entityManager = emf.createEntityManager();
+    }
+
+    public void cerrar() {
+        if (entityManager != null) {
+            entityManager.close();
+        }
+        if (emf != null) {
+            emf.close();
+        }
+    }
+
 }

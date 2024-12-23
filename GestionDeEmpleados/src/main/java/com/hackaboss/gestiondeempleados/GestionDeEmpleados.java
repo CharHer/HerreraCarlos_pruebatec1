@@ -13,10 +13,7 @@ public class GestionDeEmpleados {
     public static void main(String[] args) {
 
         ControladoraPersistencia controlPersis = new ControladoraPersistencia();
-        /*List<Empleado> listaEmpleados = controlPersis.traerEmpleados(); //Para llamar la lista de empleados
-        for (Empleado empleado : listaEmpleados) {
-            System.out.println(empleado.toString());
-        }*/
+        Empleado empleado = new Empleado();
 
         Scanner teclado = new Scanner(System.in);
         int opcion;
@@ -25,7 +22,7 @@ public class GestionDeEmpleados {
         System.out.println("\nBienvenido al sistema de Gestión de Empleados\n");
 
         while (!salir) {
-            
+
             mostrarMenu();
             System.out.println("Seleccione una opción: ");
 
@@ -34,24 +31,109 @@ public class GestionDeEmpleados {
                 opcion = teclado.nextInt();
 
                 switch (opcion) {
-                    case 1:
-                        System.out.println("Ha seleccionado la opcion 1");
+                    case 1: //agregar
+                        System.out.println("Indique los datos del nuevo empleado:");
+
+                        System.out.println("Nombre: ");
+                        teclado = new Scanner(System.in);
+                        String nombre = teclado.nextLine();
+
+                        System.out.println("Apellido: ");
+                        String apellido = teclado.nextLine();
+
+                        System.out.println("Cargo: ");
+                        String cargo = teclado.nextLine();
+
+                        System.out.println("Salario: ");
+                        teclado = new Scanner(System.in);
+                        double salario = teclado.nextDouble();
+
+                        System.out.println("Fecha de ingreso (yyyy-mm-dd");
+                        teclado = new Scanner(System.in);
+                        String fechaIngresoStr = teclado.nextLine();
+                        LocalDate fecha_ingreso = LocalDate.parse(fechaIngresoStr);
+
+                        Empleado nuevoEmpleado = new Empleado();
+                        nuevoEmpleado.setNombre(nombre);
+                        nuevoEmpleado.setApellido(apellido);
+                        nuevoEmpleado.setCargo(cargo);
+                        nuevoEmpleado.setSalario(salario);
+                        nuevoEmpleado.setFecha_ingreso(fecha_ingreso);
+
+                        controlPersis.crearEmpleado(nuevoEmpleado);
+                        System.out.println("Empleado agregado exitosamente");
+
                         break;
 
-                    case 2:
-                        System.out.println("Ha seleccionado la opcion 2");
+                    case 2: // mostrar
+
+                        System.out.println("Mostrando a todos los empleados: \n");
+                        List<Empleado> listaEmpleados = controlPersis.traerEmpleados();
+                        for (int i = 0; i < listaEmpleados.size(); i++) {
+                            empleado = listaEmpleados.get(i);
+                            System.out.println(empleado.toString());
+                        }
+
                         break;
 
-                    case 3:
-                        System.out.println("Ha seleccionado la opcion 3");
+                    case 3: //actualizar
+                        System.out.println("Por favor, indique el Id del empleado para actulizar la información\n");
+                        int id = teclado.nextInt();
+                        empleado = controlPersis.traerEmpleado(id);
+                        
+                        System.out.println("Nombre: ");
+                        teclado = new Scanner(System.in);
+                        String nombreActualizado = teclado.nextLine();
+
+                        System.out.println("Apellido: ");
+                        String apellidoActualizado = teclado.nextLine();
+
+                        System.out.println("Cargo: ");
+                        String cargoActualizado = teclado.nextLine();
+
+                        System.out.println("Salario: ");
+                        teclado = new Scanner(System.in);
+                        double salarioActualizado = teclado.nextDouble();
+
+                        System.out.println("Fecha de ingreso (yyyy-mm-dd");
+                        teclado = new Scanner(System.in);
+                        String fechaIngresoActualizado = teclado.nextLine();
+                        LocalDate fecha_ingresoActualizada = LocalDate.parse(fechaIngresoActualizado);
+                        
+                        empleado.setNombre(nombreActualizado);
+                        empleado.setApellido(apellidoActualizado);
+                        empleado.setCargo(cargoActualizado);
+                        empleado.setSalario(salarioActualizado);
+                        empleado.setFecha_ingreso(fecha_ingresoActualizada);
+                        
+                        controlPersis.actualizarEmpleado(empleado);
+                        System.out.println("Empleado actualizado exitosamente");
+
                         break;
 
-                    case 4:
-                        System.out.println("Ha seleccionado la opcion 4");
+                    case 4: //eliminar
+                        System.out.println("Por favor, indique el Id del empleado que desea borrar\n");
+                        int idBorrar = teclado.nextInt();
+                        empleado = controlPersis.traerEmpleado(idBorrar);
+                        
+                        controlPersis.eliminarEmpleado(idBorrar);
+                        System.out.println("Empleado borrado exitosamente");
                         break;
 
-                    case 5:
-                        System.out.println("Ha seleccionado la opcion 5");
+                    case 5: //buscar
+                        System.out.println("Para realizar la busqueda indique el cargo: \n");
+                        String cargoBuscar = teclado.nextLine();
+
+                        List<Empleado> empleadosEncontrados = controlPersis.traerEmpleadosCargo(cargoBuscar);
+                        if (empleadosEncontrados.isEmpty()) {
+                            System.out.println("No se encontraron empleados con el cargo: " + cargoBuscar);
+                        } else {
+                            System.out.println("Empleados con el cargo '" + cargoBuscar + "':");
+                            for (Empleado emp : empleadosEncontrados) {
+                                System.out.println(empleado);
+                            }
+                        }
+
                         break;
 
                     case 6:
@@ -66,13 +148,13 @@ public class GestionDeEmpleados {
             }
 
         }
-        
+
         teclado.close();
-        
+
     }
 
     //METODOS
-     private static void mostrarMenu() {
+    private static void mostrarMenu() {
         System.out.println(" ____________________________________");
         System.out.println("|     ***    MENÚ PRINCIPAL   ***    |");
         System.out.println("|____________________________________|");
