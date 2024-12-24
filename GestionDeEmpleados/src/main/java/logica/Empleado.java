@@ -12,18 +12,18 @@ import javax.persistence.Id;
 public class Empleado implements Serializable {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)       
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
     String nombre;
     String apellido;
     String cargo;
-    double salario;
+    Double salario;
     LocalDate fecha_ingreso;
 
     public Empleado() {
     }
 
-    public Empleado(int id, String nombre, String apellido, String cargo, double salario, LocalDate fecha_ingreso) {
+    public Empleado(int id, String nombre, String apellido, String cargo, Double salario, LocalDate fecha_ingreso) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -64,11 +64,11 @@ public class Empleado implements Serializable {
         this.cargo = cargo;
     }
 
-    public double getSalario() {
+    public Double getSalario() {
         return salario;
     }
 
-    public void setSalario(double salario) {
+    public void setSalario(Double salario) {
         this.salario = salario;
     }
 
@@ -82,9 +82,11 @@ public class Empleado implements Serializable {
 
     @Override
     public String toString() {
-        return "Empleado {" + "Id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", cargo=" + cargo + 
-                ", salario= $" + salario + ", fecha_ingreso=" + fecha_ingreso + '}';
+        return "Empleado{" + "id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", cargo=" + cargo + ", salario=" 
+                + salario + ", fecha_ingreso=" + fecha_ingreso + '}';
     }
-
+    
+    
+    
     
 }

@@ -1,6 +1,6 @@
 logica\Empleado_.class
-com\hackaboss\gestiondeempleados\GestionDeEmpleados.class
 persistencia\EmpleadoJpaController.class
+com\hackaboss\sistemagestionempleados\SistemaGestionEmpleados.class
 persistencia\exceptions\NonexistentEntityException.class
 persistencia\exceptions\PreexistingEntityException.class
 persistencia\ControladoraPersistencia.class
