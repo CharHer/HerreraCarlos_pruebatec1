@@ -51,7 +51,7 @@ public class ControladoraPersistencia {
             Logger.getLogger(ControladoraPersistencia.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     /*Para crear instancias de EntityManager, que se utilizan para interactuar con la base de datos 
     (realizar operaciones CRUD sobre las entidades).*/
     private EntityManagerFactory emf;

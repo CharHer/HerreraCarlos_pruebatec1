@@ -10,7 +10,7 @@ import javax.persistence.Id;
 
 @Entity
 public class Empleado implements Serializable {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
@@ -82,11 +82,8 @@ public class Empleado implements Serializable {
 
     @Override
     public String toString() {
-        return "Empleado{" + "id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", cargo=" + cargo + ", salario=" 
+        return "Empleado{" + "id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", cargo=" + cargo + ", salario="
                 + salario + ", fecha_ingreso=" + fecha_ingreso + '}';
     }
-    
-    
-    
-    
+
 }

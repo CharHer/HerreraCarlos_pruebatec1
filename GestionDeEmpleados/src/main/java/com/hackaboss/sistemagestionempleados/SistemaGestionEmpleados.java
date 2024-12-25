@@ -6,6 +6,11 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 import logica.Empleado;
+import static logica.Exception.validarApellido;
+import static logica.Exception.validarCargo;
+import static logica.Exception.validarFecha;
+import static logica.Exception.validarNombre;
+import static logica.Exception.validarSalario;
 import persistencia.ControladoraPersistencia;
 
 public class SistemaGestionEmpleados {
@@ -25,32 +30,34 @@ public class SistemaGestionEmpleados {
 
             mostrarMenu();
             System.out.println("Seleccione una opción: ");
-            
+
             try {
 
                 opcion = teclado.nextInt();
                 teclado.nextLine();
 
                 switch (opcion) {
-                    case 1: //agregar
-
-                        System.out.println("Ingrese los datos del nuevo empleado: ");
+                    case 1:
+                        System.out.println("\nIngrese los datos del nuevo empleado: ");
                         Empleado nuevoEmpleado = ingresarDatos();
 
                         controlPersis.crearEmpleado(nuevoEmpleado);
                         System.out.println("\nEmpleado agregado exitosamente");
 
                         break;
-                    case 2://mostrar
-                        System.out.println("Mostrando a todos los empleados: \n");
+
+                    case 2:
+                        System.out.println("\nMostrando a todos los empleados: ");
                         List<Empleado> listaEmpleados = controlPersis.traerEmpleados();
+
                         for (Empleado emp : listaEmpleados) {
                             System.out.println(emp.toString());
                         }
 
                         break;
-                    case 3://actualizar
-                        System.out.println("Por favor, indique el Id del empleado para actulizar la información: ");
+
+                    case 3:
+                        System.out.println("\nPor favor, indique el Id del empleado para actulizar la información: ");
                         int id = teclado.nextInt();
                         teclado.nextLine();
 
@@ -67,40 +74,41 @@ public class SistemaGestionEmpleados {
                         System.out.println("\nEmpleado actualizado exitosamente.");
 
                         break;
-                    case 4://eliminar
-                        System.out.println("Por favor, indique el Id del empleado que desea borrar");
+
+                    case 4:
+                        System.out.println("\nPor favor, indique el Id del empleado que desea borrar");
                         int idBorrar = teclado.nextInt();
                         teclado.nextLine();
 
                         Empleado empleadoABorrar = controlPersis.traerEmpleado(idBorrar);
 
                         if (empleadoABorrar != null) {
-                            
-                            controlPersis.borrarEmpleado(idBorrar);
-                            System.out.println("Empleado borrado exitosamente.");
-                        } 
-                        else {
 
-                            System.out.println("No se encontró un empleado con el ID proporcionado");
+                            controlPersis.borrarEmpleado(idBorrar);
+                            System.out.println("\nEmpleado borrado exitosamente.");
+                        } else {
+
+                            System.out.println("\nNo se encontró un empleado con el ID proporcionado");
                         }
 
                         break;
-                    case 5://buscar por cargo
-                        System.out.println("Para realizar la búsqueda indique el cargo:");
+
+                    case 5:
+                        System.out.println("\nPara realizar la búsqueda indique el cargo:");
                         String cargoBuscar = teclado.nextLine().trim();
 
                         List<Empleado> empleadosEncontrados = controlPersis.traerEmpleadosCargo(cargoBuscar);
 
                         if (empleadosEncontrados != null && !empleadosEncontrados.isEmpty()) {
-                            System.out.println("Empleados con el cargo " + cargoBuscar + ":");
+                            System.out.println("\nEmpleados con el cargo " + cargoBuscar + ":");
                             for (Empleado emp : empleadosEncontrados) {
                                 System.out.println(emp);
                             }
-                        } 
-                        else {
-                            System.out.println("No se encontraron empleados con el cargo '" + cargoBuscar + "'.");
+                        } else {
+                            System.out.println("\nNo se encontraron empleados con el cargo '" + cargoBuscar + "'.");
                         }
                         break;
+
                     case 6:
                         salir = true;
 
@@ -110,7 +118,7 @@ public class SistemaGestionEmpleados {
                         System.out.println("\nIngrese solo números entre 1 y 6");
                 }
             } catch (InputMismatchException e) {
-                System.out.println("Por favor, ingrese un número válido");
+                System.out.println("\nPor favor, ingrese un número válido");
                 teclado.next();
             }
         }
@@ -119,10 +127,8 @@ public class SistemaGestionEmpleados {
 
     }
 
-    //METODOS
     private static void mostrarMenu() {
-        
-        
+
         System.out.println(" ____________________________________");
         System.out.println("|     ***    MENÚ PRINCIPAL   ***    |");
         System.out.println("|____________________________________|");
@@ -135,7 +141,7 @@ public class SistemaGestionEmpleados {
         System.out.println("|____________________________________|\n");
     }
 
-    private static Empleado ingresarDatos() {
+    public static Empleado ingresarDatos() {
         Empleado empleado = new Empleado();
 
         String nom = null;
@@ -145,13 +151,12 @@ public class SistemaGestionEmpleados {
 
             try {
                 System.out.print("Nombre: ");
-                String  nombre = teclado.nextLine().trim();
+                String nombre = teclado.nextLine().trim();
                 validarNombre(nombre);
                 nombreValido = true;
                 empleado.setNombre(nombre);
 
-            } 
-            catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
         }
@@ -168,9 +173,8 @@ public class SistemaGestionEmpleados {
                 apellidoValido = true;
                 empleado.setApellido(apellido);
 
-            } 
-            catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage()); 
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
             }
         }
 
@@ -186,9 +190,8 @@ public class SistemaGestionEmpleados {
                 cargoValido = true;
                 empleado.setCargo(cargo);
 
-            } 
-            catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage()); 
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
             }
         }
 
@@ -203,9 +206,8 @@ public class SistemaGestionEmpleados {
                 validarSalario(salario);
                 salarioValido = true;
                 empleado.setSalario(salario);
-            } 
-            catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage()); 
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
             }
         }
 
@@ -219,47 +221,15 @@ public class SistemaGestionEmpleados {
                 validarFecha(fecha);
                 fechaValida = true;
                 empleado.setFecha_ingreso(fecha);
-            } 
-            catch (DateTimeParseException e) {
+            } catch (DateTimeParseException e) {
                 System.out.println("Formato de fecha incorrecto. Use el formato yyyy-mm-dd.");
-            } 
-            catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
         }
 
         return empleado;
 
-    }
-
-    private static void validarNombre(String nom) {
-        if (nom == null || nom.trim().isEmpty()) { 
-            throw new IllegalArgumentException("El nombre no puede estar vacio");
-        }
-    }
-
-    private static void validarApellido(String ape) {
-        if (ape == null || ape.trim().isEmpty()) { 
-            throw new IllegalArgumentException("El apellido no puede estar vacio");
-        }
-    }
-
-    private static void validarCargo(String carg) {
-        if (carg == null || carg.trim().isEmpty()) { 
-            throw new IllegalArgumentException("El cargo no puede estar vacio");
-        }
-    }
-
-    private static void validarSalario(double sal) {
-        if (sal <= 0) {
-            throw new IllegalArgumentException("El saldo debe ser mayor a 0");
-        }
-    }
-
-    public static void validarFecha(LocalDate fechain) {
-        if (fechain.isAfter(LocalDate.now())) {
-            throw new IllegalArgumentException("La fecha de ingreso no puede ser en el futuro");
-        }
     }
 
 }
