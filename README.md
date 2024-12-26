@@ -29,16 +29,16 @@ Este documento explica el desarrollo e implementación de un **sistema de gesti�
 
 ##Descripción de las Clases Principales
 
-###Clase Empleado 
+1. Clase Empleado 
 Esta clase representa la entidad principal del sistema con los atributos del empleado. Utiliza anotaciones JPA para mapearse con la base de datos y tiene métodos getters, setters y toString.
 
-###Clase ControladoraPersistencia 
+2. Clase ControladoraPersistencia 
 Es la intermediaria entre la lógica y la base de datos, realizando funciones como crear, eliminar, actualizar y obtener listas de empleados. Gestiona EntityManager y EntityManagerFactory para operaciones de persistencia.
 
-###Clase EmpleadoJpaController 
+3. Clase EmpleadoJpaController 
 Implementa las operaciones CRUD sobre la base de datos mediante JPA. Sus métodos destacados son create para persistir nuevos empleados, edit para actualizar datos de empleados existentes, destroy para eliminar empleados por su ID, y findEmpleado para recuperar empleados según su ID.
 
-###Clase Exception 
+4. Clase Exception 
 Valida datos ingresados para asegurar que el nombre, apellido y cargo no sean vacíosñ el salario sea mayor a 0 y que a fecha de ingreso no sea futura
 
 
